@@ -1,0 +1,13 @@
+C:\Users\XU\pgen>proots -r 277666 -n 5
+Match found. Verifying primality of factors of p-1...
+Looking for 5 primitive roots >= 2 of 128-bit prime:
+277666483056069257952962430614829339539
+Root g is primitive if g ^ ((p-1)/f) mod p <> 1 for all factors f of p-1
+2 6 8 10 11
+
+C:\Users\XU\pgen>proots -r 30079 -n 5
+Match found. Verifying primality of factors of p-1...
+Looking for 5 primitive roots >= 2 of 128-bit prime:
+300797750491443412364139154523960513627
+Root g is primitive if g ^ ((p-1)/f) mod p <> 1 for all factors f of p-1
+2 5 6 7 8
