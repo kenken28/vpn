@@ -1,4 +1,5 @@
 # vpn
+This vpn program alows encypted comunication between SERVER and CLIENT.
 
 ## Group members
 * William Geng  - 
@@ -6,8 +7,8 @@
 * Rico Wen      - 
 * Yuxin Xu      - 37909090
 
-This vpn program alows encypted comunication between SERVER and CLIENT.
 
+## Reference
 The prime number used for Diffie-Hellman is from [RFC 3526](https://www.ietf.org/rfc/rfc3526.txt).
 > (Referenced from RFC 3526)
 > 
