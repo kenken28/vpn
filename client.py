@@ -2,11 +2,15 @@
 
 import socket               # Import socket module
 import sys
+import crypter
 import mylib as m
+from threading import Thread
 
-    
-#HOST = raw_input("Enter Server IP address: ")
+Tkey = "two hashes walked into a bar, one was a salted"
+print "NOTE: Enter key at SERVER side first before entering key at CLIENT side!"
+Tkey = raw_input("Enter your key: ")
 HOST = socket.gethostname()
+#HOST = raw_input("Enter Server IP address: ")
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -14,26 +18,49 @@ try:
 except socket.error as msg:
     s.close()
     s = None
-    print 'could not open socket'
+    print 'Could not open socket.'
     sys.exit(1)
+print "Connected to SERVER"
+MBtitle = "From SERVER: "
 
-myMsg = 'You are SERVER'
-print repr(m.mRecv(s))                 # Test receiveing
-m.mSend(s, myMsg)                      # Test sending
+nonceB = str( m.randI(2**256,2**257) )
+cID = str( m.randI(2**64,2**65) )
+tmpAES = crypter.AESc( m.getMD5(Tkey) )
 
+############### Key establishment starts ###############
 b = m.randI(2**2049,2**4096)
 B = pow(m.P_ROOT, b, m.PRIME2048)
 
-A = int(m.mRecv(s))
-m.mSend(s, B)
+# recieve Ra
+hello1 = m.mRecv(s)
+sID, nonceA = hello1.split(m.sp)
 
+# send responce with Rb and B
+hello2 = tmpAES.enc(cID + m.sp + nonceA + m.sp + str(B))
+m.mSend(s, nonceB + m.sp + hello2)
+
+# revieve responce with A
+responceA = m.mRecv(s)
+hello3raw = tmpAES.dec(responceA)
+try:
+    sID2, nonceB2, strA = hello3raw.split(m.sp)
+    if nonceB2 != nonceB or sID != sID2:
+        s.close()
+        print "Incorrect nonceB or sID or Key!"
+        sys.exit()
+except:
+    s.close()
+    print "Incorrect nonceB or Key!"
+    sys.exit()
+
+# calculate session key
+A = int(strA)
 Cs = pow(A, b, m.PRIME2048)
-print Cs
-#Ss = int(m.mRecv(s))                # varify key, should not exist in real code
-#if Ss == Cs:
-#    print "key varified!"
+#print Cs
+############### Key establishment ends ###############
 
+# 
+myAES = crypter.AESc( m.getMD5(Cs) )
 
-
-s.close()
+m.loop_send(s, myAES, MBtitle)
 
