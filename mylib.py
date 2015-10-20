@@ -46,18 +46,31 @@ def mRecv(s):
     return whole
 
 def loop_send(s, cipher, title):
-    print "\nEnter message to send a message"
-    print "Enter '@r' to recieve a message (if no message has been sent on the other side, process will wait for a message to be sent)"
-    print "Enter '@e' to exit"
+    print "\n- Enter message followed with '@s' to send a message (Accept newline character. '@s' must be at the end to end message input)"
+    print "- Enter '@r' to recieve a message (if no message has been sent on the other side, process will wait for a message to be sent)"
+    print "- Enter '@e' to exit"
     while 1:
-        myMsg = raw_input("\nTo send: ")
-        if myMsg == "@r":
-            do_recv(s, cipher, title)
+        myMsg = ""
+        tmpLine = ""
+        print "\n====================================================\nTo send: "
+        while myMsg != "@r\n" and myMsg != "@e\n" and myMsg[-3:] != "@s\n":
+            tmpLine = raw_input('''''')
+            myMsg += tmpLine + '\n'
+            #print myMsg[-2:]
+        
+        if myMsg == "@r\n":
+            if do_recv(s, cipher, title) == 1:
+                s.close()
+                print title + " has closed this chat session"
+                sys.exit()
+                break
         else:
+            if myMsg != "@e\n":
+                myMsg = myMsg[:-3]
             myMsgMD5 = getMD5(myMsg)
             encMsg = cipher.enc(myMsg + sp + myMsgMD5)
             mSend(s, encMsg)
-            if myMsg == "@e":
+            if myMsg == "@e\n":
                 s.close()
                 print "Closing chat session"
                 sys.exit()
@@ -67,14 +80,12 @@ def do_recv(s, cipher, title):
     decMsg = cipher.dec(mRecv(s))
     try:
         rawMsg, rawMsgMD5 = decMsg.split(sp)
-        toPrint = title + rawMsg
+        toPrint = "=================== Form " + title + ": =================== \n" + rawMsg
         if getMD5(rawMsg) != rawMsgMD5:
             s.close()
             print "Incorrect message checksum!"
-        elif rawMsg == "@e":
-            s.close()
-            print "Chat session has been closed"
-            sys.exit()
+        elif rawMsg == "@e\n":
+            return 1
         else:
             print toPrint
     except:

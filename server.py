@@ -7,11 +7,11 @@ import crypter
 import mylib as m
 from threading import Thread
 
-Tkey = "two hashes walked into a bar, one was a salted"
+# Prumpt for key and port
 print "NOTE - Enter key and PORT at SERVER side first before entering key at CLIENT side!"
 print "     - SERVER and CLIENT need to be in the same LAN"
+#Tkey = "two hashes walked into a bar, one was a salted"
 Tkey = getpass.getpass("Enter your key: ")
-
 while len(Tkey) < 8:
     print "Key needs to be at least 8 characters long"
     Tkey = getpass.getpass("Enter your key: ")
@@ -23,8 +23,8 @@ PORT = raw_input("Enter port number (leave it empty to set to default PORT numbe
 if PORT == "":
     PORT = m.PORT
 
+# Socket connection
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 try:
     s.bind((HOST, PORT))
     print "Server IP address and Port:", s.getsockname()
@@ -36,26 +36,28 @@ except socket.error as msg:
     sys.exit(1)
 conn, addr = s.accept()
 print 'Connected by', addr
-MBtitle = "From CLIENT: "
+MBtitle = "CLIENT"
 
+# Set up variables for Diffie-Hellman protocol
 nonceA = str( m.randI(2**256,2**257) )
 sID = str( m.randI(2**64,2**65) )
 tmpAES = crypter.AESc( m.getMD5(Tkey) )
+Tkey = "two hashes walked into a bar, one was a salted" # Erase key
 
-############### Key establishment starts ###############
-a = m.randI(2**2049,2**4096)
+#### Key Establishment and Mutual Authentication starts ####
+a = m.randI(2**256,2**257)
 A = pow(m.P_ROOT, a, m.PRIME2048)
 
-# send first message with Ra
+# send ["I'm Alice", Ra]
 m.mSend(conn, sID + m.sp + nonceA)
 
-# revieve responce with Rb and B
+# revieve [Rb, E("Bob", Ra, gb mod p, Kab)], and varify Ra and Kab
 responceB = m.mRecv(conn)
 nonceB, hello2 = responceB.split(m.sp)
 hello2raw = tmpAES.dec(hello2)
 try:
-    cID, nonceA2, strB = hello2raw.split(m.sp)
-    if nonceA2 != nonceA:
+    cID, nonceAecho, strB = hello2raw.split(m.sp)
+    if nonceAecho != nonceA:
         conn.close()
         print "Incorrect nonceA or Key!"
         sys.exit()
@@ -64,7 +66,7 @@ except:
     print "Incorrect nonceA or Key!"
     sys.exit()
 
-# send responce with A
+# send [E("Alice", Rb, ga mod p, Kab)]
 responceA = tmpAES.enc(sID + m.sp + nonceB + m.sp + str(A))
 m.mSend(conn, responceA)
 
@@ -72,10 +74,10 @@ m.mSend(conn, responceA)
 B = int(strB)
 Ss = pow(B, a, m.PRIME2048)
 #print Ss
-############### Key establishment ends ###############
-# 
-myAES = crypter.AESc( m.getMD5(Ss) )
+##### Key Establishment and Mutual Authentication ends #####
 
+# start sending and receiving messages
+myAES = crypter.AESc( m.getMD5(Ss) )
 m.loop_send(conn, myAES, MBtitle)
 
 
