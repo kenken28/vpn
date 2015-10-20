@@ -21,17 +21,17 @@ myMsg = 'You are SERVER'
 print repr(m.mRecv(s))                 # Test receiveing
 m.mSend(s, myMsg)                      # Test sending
 
-b = m.randI(2**2049,2**2050-1)
-B = pow(m.P_ROOT, b, m.PRIME128)
+b = m.randI(2**2049,2**4096)
+B = pow(m.P_ROOT, b, m.PRIME2048)
 
 A = int(m.mRecv(s))
 m.mSend(s, B)
 
-Cs = pow(A, b, m.PRIME)
+Cs = pow(A, b, m.PRIME2048)
 print Cs
-Ss = int(m.mRecv(s))                # varify key, should not exist in real code
-if Ss == Cs:
-    print "key varified!"
+#Ss = int(m.mRecv(s))                # varify key, should not exist in real code
+#if Ss == Cs:
+#    print "key varified!"
 
 
 
