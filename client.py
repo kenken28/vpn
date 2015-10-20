@@ -16,8 +16,9 @@ while len(Tkey) < 8:
     print "Key needs to be at least 8 characters long"
     Tkey = getpass.getpass("Enter your key: ")
 
-HOST = socket.gethostname()
-HOST = raw_input("Enter Server IP address: ")
+HOST = raw_input("Enter Server IP address (leave it empty to connect to SERVER.py on the same computer): ")
+if HOST == "":
+    HOST = socket.gethostname()
 
 PORT = raw_input("Enter port number (leave it empty to set to default PORT number 50007): ")
 if PORT == "":
