@@ -10,5 +10,5 @@ To use the vpn
 * 4. Enter the key as prumpt
 * 5. ## Wait for Key Establishment and Mutual Authentication ##
 * 6. Enter message to be sent at either SERVER side or CLIENT side.
-* 7. Enter "@r" at the opposite side to recieve a message (if $$n$$ messages have been sent, Enter "@r" for $$n$$ times to recieve all messages)
+* 7. Enter "@r" at the opposite side to recieve a message (if n messages have been sent, Enter "@r" for n times to recieve all messages)
 * 8. Enter "@e" to exit
