@@ -29,7 +29,7 @@ The prime number used for Diffie-Hellman is from [RFC 3526](https://www.ietf.org
 
 ## Terminal version
 To use the vpn in Terminal
-* 0. If your python does not have Cryptographic modules, install it. ([for Linux](https://pypi.python.org/pypi/pycrypto), [for Windows](http://www.voidspace.org.uk/python/modules.shtml#pycrypto))
+* 0. If your python does not have Cryptographic modules, install it ([for Linux](https://pypi.python.org/pypi/pycrypto), [for Windows](http://www.voidspace.org.uk/python/modules.shtml#pycrypto))
 * 1. Run SERVER: $ python server.py
 * 2. Enter the key as prumpted
 * 3. Run CLIENT: $ python client.py
@@ -37,7 +37,8 @@ To use the vpn in Terminal
 * 5. ## Wait for Key Establishment and Mutual Authentication ##
 * 6. Enter message to be sent at either SERVER side or CLIENT side.
 * 7. Enter "@r" at the opposite side to recieve a message (if n messages have been sent, Enter "@r" for n times to recieve all messages)
-* 8. Enter "@e" to exit
+* 8. Repeat step 6-7
+* 9. Enter "@e" to exit
 
 ## GUI version
 To use the vpn in GUI
