@@ -5,7 +5,7 @@ This vpn program alows encypted comunication between SERVER and CLIENT.
 The prime number used for Diffie-Hellman is from [RFC 3526](https://www.ietf.org/rfc/rfc3526.txt).
 > (Referenced from RFC 3526)
 > 
-> 3.  2048-bit MODP Group
+> * 2048-bit MODP Group
 > 
 >    This group is assigned id 14.
 > 
