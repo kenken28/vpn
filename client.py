@@ -7,14 +7,25 @@ import mylib as m
 from threading import Thread
 
 Tkey = "two hashes walked into a bar, one was a salted"
-print "NOTE: Enter key at SERVER side first before entering key at CLIENT side!"
+print "NOTE - Enter key at SERVER side first before entering key at CLIENT side!"
+print "     - SERVER and CLIENT need to be in the same LAN"
 Tkey = raw_input("Enter your key: ")
+
+while len(Tkey) < 8:
+    print "Key needs to be at least 8 characters long"
+    Tkey = raw_input("Enter your key: ")
+
 HOST = socket.gethostname()
-#HOST = raw_input("Enter Server IP address: ")
+HOST = raw_input("Enter Server IP address: ")
+
+PORT = raw_input("Enter port number (leave it empty to set to default PORT number): ")
+if PORT == "":
+    PORT = m.PORT
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
-    s.connect((HOST, m.PORT))
+    s.connect((HOST, PORT))
 except socket.error as msg:
     s.close()
     s = None

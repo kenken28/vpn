@@ -46,7 +46,7 @@ def mRecv(s):
     return whole
 
 def loop_send(s, cipher, title):
-    print "Enter message to send a message"
+    print "\nEnter message to send a message"
     print "Enter '@r' to recieve a message (if no message has been sent on the other side, process will wait for a message to be sent)"
     print "Enter '@e' to exit"
     while 1:
