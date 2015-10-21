@@ -1,11 +1,11 @@
 # vpn
 This vpn program alows encypted comunication between SERVER and CLIENT.
 
-## Group members
-* William Geng  - 
-* Peter Wang    - 
-* Rico Wen      - 
-* Yuxin Xu      - 37909090
+## Aliases of group members 
+* Pandaojisan
+* PedroF
+* 
+* 
 
 
 ## Reference
