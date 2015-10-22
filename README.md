@@ -2,10 +2,10 @@
 This vpn program alows encypted comunication between SERVER and CLIENT.
 
 ## Aliases of group members 
-* Pandaojisan
 * PedroF
-* 
-* 
+* Pandaojisan
+* Lawliet
+* chen0926
 
 
 ## Reference
@@ -43,7 +43,7 @@ To use the vpn in Terminal
 * 4. Enter the key, SERVER IP address, and port number as prumpted
 * 5. ## Wait for Key Establishment and Mutual Authentication ##
 * 6. Enter message to be sent followed with "@s" at either SERVER side or CLIENT side (Accept newline character. '@s' must be at the end to end message input)
-* 7. Enter "@r" at the opposite side to recieve a message (if n messages have been sent, Enter "@r" for n times to recieve all messages)
+* 7. Enter "@r" at the opposite side to receive a message (if n messages have been sent, Enter "@r" for n times to recieve all messages)
 * 8. Repeat step 6-7
 * 9. Enter "@e" to exit
 

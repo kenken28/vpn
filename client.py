@@ -5,7 +5,6 @@ import getpass
 import sys
 import crypter
 import mylib as m
-from threading import Thread
 
 # Prumpt for key and port
 print "NOTE - Enter key and PORT at SERVER side first before entering key at CLIENT side!"
